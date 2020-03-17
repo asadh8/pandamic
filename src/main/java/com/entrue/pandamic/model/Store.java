@@ -1,24 +1,31 @@
 package com.entrue.pandamic.model;
 
-import com.entrue.pandamic.model.util.GeoLocation;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "store")
 public class Store {
 
-    private String storeId;
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long storeId;
 
+    @Column(name = "name")
     private String storeName;
 
-    private GeoLocation storeLocation;
+    @Column(name = "location_id")
+    private String locationId;
 
     public Store() {
 
     }
 
-    public String getStoreId() {
+    public Long getStoreId() {
         return storeId;
     }
 
-    public void setStoreId(String storeId) {
+    public void setStoreId(Long storeId) {
         this.storeId = storeId;
     }
 
@@ -30,11 +37,20 @@ public class Store {
         this.storeName = storeName;
     }
 
-    public GeoLocation getStoreLocation() {
-        return storeLocation;
+    public String getLocationId() {
+        return locationId;
     }
 
-    public void setStoreLocation(GeoLocation storeLocation) {
-        this.storeLocation = storeLocation;
+    public void setLocationId(String locationId) {
+        this.locationId = locationId;
+    }
+
+    @Override
+    public String toString() {
+        return "Store{" +
+                "storeId=" + storeId +
+                ", storeName='" + storeName + '\'' +
+                ", locationId='" + locationId + '\'' +
+                '}';
     }
 }

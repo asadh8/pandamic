@@ -1,49 +1,58 @@
-package com.entrue.pandamic.model;
+package com.entrue.pandamic.model.elasticsearch;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.entrue.pandamic.model.StoreStock;
+import com.entrue.pandamic.model.geo.GeoLocation;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.GeoPointField;
+import org.springframework.data.elasticsearch.core.geo.GeoPoint;
+
+import java.io.Serializable;
 import java.util.Date;
 
-@Entity
-@Table(name = "stock")
-public class StoreStock {
+@Document(indexName = "stocks", type = "stock")
+public class StockEntity implements Serializable {
+
+    private static final long serialVersionUID = -2950330253257305473L;
 
     @Id
-    @Column(name = "id")
     private String stockId;
 
-    @Column(name = "item_id")
+    @GeoPointField
+    private GeoPoint location;
+
     private String itemId;
 
-    @Column(name = "number")
     private Integer number;
 
-    @Column(name = "start_time")
     private Date startTime;
 
-    @Column(name = "end_time")
     private Date endTime;
 
-    @Column(name = "store_id")
     private Long storeId;
 
-    @Column(name = "location_id")
     private String locationId;
 
-    @Column(name = "active")
     private boolean active;
 
-    @Column(name = "description")
     private String description;
 
-    public StoreStock() {
+    public StockEntity() {
 
     }
 
-    public StoreStock(long id) {
-        setStockId("" + id);
+    public StockEntity(StoreStock stock, GeoLocation geoLocation) {
+        setStoreId(stock.getStoreId());
+        setActive(stock.isActive());
+        setDescription(stock.getDescription());
+        setEndTime(stock.getEndTime());
+        setItemId(stock.getItemId());
+        GeoPoint geoPoint = new GeoPoint(geoLocation.getLat(), geoLocation.getLon());
+        setLocation(geoPoint);
+        setLocationId(stock.getLocationId());
+        setNumber(stock.getNumber());
+        setStartTime(stock.getStartTime());
+        setStockId(stock.getStockId());
     }
 
     public String getStockId() {
@@ -86,14 +95,6 @@ public class StoreStock {
         this.endTime = endTime;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
     public Long getStoreId() {
         return storeId;
     }
@@ -110,6 +111,14 @@ public class StoreStock {
         this.locationId = locationId;
     }
 
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -118,10 +127,19 @@ public class StoreStock {
         this.description = description;
     }
 
+    public GeoPoint getLocation() {
+        return location;
+    }
+
+    public void setLocation(GeoPoint location) {
+        this.location = location;
+    }
+
     @Override
     public String toString() {
-        return "StoreStock{" +
+        return "StockEntity{" +
                 "stockId=" + stockId +
+                ", location=" + location +
                 ", itemId='" + itemId + '\'' +
                 ", number=" + number +
                 ", startTime=" + startTime +
