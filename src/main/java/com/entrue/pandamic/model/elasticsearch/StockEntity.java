@@ -2,44 +2,54 @@ package com.entrue.pandamic.model.elasticsearch;
 
 import com.entrue.pandamic.model.StoreStock;
 import com.entrue.pandamic.model.geo.GeoLocation;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.GeoPointField;
 import org.springframework.data.elasticsearch.core.geo.GeoPoint;
 
 import java.io.Serializable;
 import java.util.Date;
 
-@Document(indexName = "stocks", type = "stock")
+@Document(indexName = "stocks")
+@NoArgsConstructor
 public class StockEntity implements Serializable {
 
-    private static final long serialVersionUID = -2950330253257305473L;
+    private static final long serialVersionUID = -5028580216719997315L;
 
     @Id
+    @Field(type = FieldType.Keyword)
     private String stockId;
 
     @GeoPointField
     private GeoPoint location;
 
+    @Field(type = FieldType.Text)
     private String itemId;
 
+    @Field(type = FieldType.Integer)
     private Integer number;
 
+    @Field(type = FieldType.Date)
     private Date startTime;
 
+    @Field(type = FieldType.Date)
     private Date endTime;
 
+    @Field(type = FieldType.Long)
     private Long storeId;
 
+    @Field(type = FieldType.Text)
     private String locationId;
 
+    @Field(type = FieldType.Boolean)
     private boolean active;
 
+    @Field(type = FieldType.Text)
     private String description;
-
-    public StockEntity() {
-
-    }
 
     public StockEntity(StoreStock stock, GeoLocation geoLocation) {
         setStoreId(stock.getStoreId());

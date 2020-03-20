@@ -18,6 +18,11 @@ public class GeoLocation {
 
     }
 
+    public GeoLocation(double lat, double lon) {
+        setLat(lat);
+        setLon(lon);
+    }
+
     public String getLocationId() {
         if (locationId == null || locationId == "") {
             locationId = generateId();
