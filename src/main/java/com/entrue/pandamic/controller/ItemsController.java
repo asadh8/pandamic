@@ -16,8 +16,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ItemsController {
 
-    @Autowired
     private ItemsManager itemsManager;
+
+    @Autowired
+    public ItemsController(ItemsManager itemsManager) {
+        this.itemsManager = itemsManager;
+    }
 
     @RequestMapping(path = "/items/create", method = RequestMethod.POST)
     public ResponseEntity<?> createItem(@RequestBody CreateItemRequest request) {
@@ -34,7 +38,7 @@ public class ItemsController {
         }
     }
 
-    @RequestMapping(path = "/items/all", method = RequestMethod.POST)
+    @RequestMapping(path = "/items/active", method = RequestMethod.POST)
     public ResponseEntity<?> getItems() {
         ItemsResponse response = new ItemsResponse();
         try {

@@ -1,10 +1,9 @@
 package com.entrue.pandamic.controller;
 
-import com.entrue.pandamic.exception.InternalException;
 import com.entrue.pandamic.exception.StockCreationException;
 import com.entrue.pandamic.service.StoreStockManagerService;
 import com.entrue.pandamic.view.request.stock.BrowserLocation;
-import com.entrue.pandamic.view.request.stock.CreateStock;
+import com.entrue.pandamic.view.request.stock.CreateStocksRequest;
 import com.entrue.pandamic.view.response.stock.CreateStockResponse;
 import com.entrue.pandamic.view.response.stock.StocksResponse;
 import org.apache.logging.log4j.LogManager;
@@ -22,8 +21,12 @@ public class StocksController {
 
     private static final Logger logger = LogManager.getLogger(StocksController.class);
 
-    @Autowired
     private StoreStockManagerService storeStockManagerService;
+
+    @Autowired
+    public StocksController(StoreStockManagerService storeStockManagerService) {
+        this.storeStockManagerService = storeStockManagerService;
+    }
 
     /**
      * @param location
@@ -43,15 +46,13 @@ public class StocksController {
     }
 
     @RequestMapping(path = "/stocks/create", method = RequestMethod.POST)
-    public ResponseEntity<?> introduceNewStock(@RequestBody CreateStock stock) {
+    public ResponseEntity<?> introduceNewStock(@RequestBody CreateStocksRequest stocks) {
         CreateStockResponse response = new CreateStockResponse();
         try {
-            storeStockManagerService.createStock(stock);
-            response.setStocks(storeStockManagerService.getLocationBasedStocks(stock.getLocation()));
+            storeStockManagerService.createStocks(stocks);
+            response.setStocks(storeStockManagerService.getLocationBasedStocks(stocks.getLocation()));
             response.setCallSucceeded(true);
         } catch (StockCreationException e) {
-            response.setMessage(e.getMessage());
-        } catch (InternalException e) {
             response.setMessage(e.getMessage());
         } catch (Exception e) {
             logger.error("Exception occured while creating the stock with error={}", e);

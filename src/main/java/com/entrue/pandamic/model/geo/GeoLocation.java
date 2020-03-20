@@ -1,9 +1,15 @@
 package com.entrue.pandamic.model.geo;
 
-import javax.persistence.*;
+import com.entrue.pandamic.view.request.stock.BrowserLocation;
+import com.entrue.pandamic.view.request.stock.CreateStocksRequest;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "locations")
+@Table(schema = "pandamic", name = "locations")
 public class GeoLocation {
 
     @Id
@@ -14,8 +20,36 @@ public class GeoLocation {
 
     private double lon;
 
+    private String address1;
+
+    private String address2;
+
+    private String city;
+
+    @Column(name = "state_code")
+    private String stateCode;
+
+    private String country;
+
+    private String zipcode;
+
     public GeoLocation() {
 
+    }
+
+    public GeoLocation(BrowserLocation location) {
+        setLat(location.getLatitude());
+        setLon(location.getLongitude());
+    }
+
+    public GeoLocation(CreateStocksRequest req) {
+        setLon(req.getLocation().getLongitude());
+        setLat(req.getLocation().getLatitude());
+        setAddress1(req.getAddressLine1());
+        setAddress2(req.getAddressLine2());
+        setCity(req.getCity());
+        setStateCode(State.valueOf(req.getState().toUpperCase()).getAbbreviation());
+        setCountry(req.getCountry());
     }
 
     public String getLocationId() {
@@ -45,8 +79,47 @@ public class GeoLocation {
         this.lon = lon;
     }
 
+    public String getAddress1() {
+        return address1;
+    }
+
+    public void setAddress1(String address1) {
+        this.address1 = address1;
+    }
+
+    public String getAddress2() {
+        return address2;
+    }
+
+    public void setAddress2(String address2) {
+        this.address2 = address2;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
     /**
-     *
      * @return
      */
     public String generateId() {

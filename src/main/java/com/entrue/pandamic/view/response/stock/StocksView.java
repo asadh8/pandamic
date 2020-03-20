@@ -2,14 +2,17 @@ package com.entrue.pandamic.view.response.stock;
 
 import com.entrue.pandamic.model.Item;
 import com.entrue.pandamic.model.Store;
+import com.entrue.pandamic.model.elasticsearch.StockEntity;
 import com.entrue.pandamic.model.geo.GeoLocation;
 import com.entrue.pandamic.view.response.item.ItemsView;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@NoArgsConstructor
 public class StocksView {
 
-    private Long stockId;
+    private String stockId;
 
     private ItemsView item;
 
@@ -23,15 +26,18 @@ public class StocksView {
 
     private Date endTime;
 
-    public StocksView() {
-
+    public StocksView(StockEntity entity) {
+        setEndTime(entity.getEndTime());
+        setStartTime(entity.getStartTime());
+        setNumber(entity.getNumber());
+        setStockId(entity.getStockId());
     }
 
-    public Long getStockId() {
+    public String getStockId() {
         return stockId;
     }
 
-    public void setStockId(Long stockId) {
+    public void setStockId(String stockId) {
         this.stockId = stockId;
     }
 

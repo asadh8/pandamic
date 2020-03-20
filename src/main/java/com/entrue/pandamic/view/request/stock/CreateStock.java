@@ -7,8 +7,6 @@ public class CreateStock {
 
     private String itemId;
 
-    private BrowserLocation location;
-
     private Integer countOfItems;
 
     private String startTimestamp;
@@ -27,14 +25,6 @@ public class CreateStock {
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
-    }
-
-    public BrowserLocation getLocation() {
-        return location;
-    }
-
-    public void setLocation(BrowserLocation location) {
-        this.location = location;
     }
 
     public Integer getCountOfItems() {

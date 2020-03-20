@@ -1,7 +1,11 @@
 package com.entrue.pandamic.view.response.item;
 
+import com.entrue.pandamic.model.Item;
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
+@NoArgsConstructor
 public class ItemsView implements Serializable {
 
     private String id;
@@ -10,8 +14,10 @@ public class ItemsView implements Serializable {
 
     private String description;
 
-    public ItemsView() {
-
+    public ItemsView(Item item) {
+        setName(item.getItemName());
+        setDescription(item.getDescription());
+        setId(item.getId());
     }
 
     public String getId() {

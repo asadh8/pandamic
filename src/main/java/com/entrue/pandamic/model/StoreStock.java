@@ -7,7 +7,7 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "stock")
+@Table(schema = "pandamic", name = "stocks")
 public class StoreStock {
 
     @Id

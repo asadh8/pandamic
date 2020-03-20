@@ -14,17 +14,16 @@ import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ItemsManager {
 
+    private static final Logger logger = LogManager.getLogger(ItemsManager.class);
     @Autowired
     private ItemService itemService;
 
-    private static final Logger logger = LogManager.getLogger(ItemsManager.class);
-
     /**
-     *
      * @param createItem
      * @throws InternalException
      */
@@ -37,6 +36,7 @@ public class ItemsManager {
         }
 
         Item item = new Item();
+        item.setId(UUID.randomUUID().toString());
         item.setActive(true);
         item.setItemName(createItem.getItemName());
         item.setDescription(createItem.getItemDescription());
@@ -46,7 +46,6 @@ public class ItemsManager {
     }
 
     /**
-     *
      * @return
      */
     public List<ItemsView> getAllActiveItems() {
@@ -54,11 +53,7 @@ public class ItemsManager {
         Iterable<Item> items = itemService.getItemsRepository().findAll();
         List<ItemsView> itemsView = new ArrayList<>();
         items.forEach(item -> {
-            ItemsView iv = new ItemsView();
-            iv.setId(item.getId());
-            iv.setDescription(item.getDescription());
-            iv.setName(item.getItemName());
-            itemsView.add(iv);
+           itemsView.add(new ItemsView(item));
         });
 
         logger.debug("Number of items found={}", itemsView.size());
