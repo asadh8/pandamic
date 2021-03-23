@@ -100,6 +100,7 @@ public class StocksSearchService {
      * <p>
      * Delete a stock from elastic search
      * </p>
+(??)
      *
      * @param stockId
      * @return

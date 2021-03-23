@@ -17,6 +17,7 @@ import com.entrue.pandamic.view.request.stock.CreateStock;
 import com.entrue.pandamic.view.request.stock.CreateStocksRequest;
 import com.entrue.pandamic.view.response.item.ItemsView;
 import com.entrue.pandamic.view.response.stock.StocksView;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,26 @@ public class StoreStockManagerService {
         this.geoLocationService = geoLocationService;
         this.stocksSearchService = stocksSearchService;
         this.storeService = storeService;
+    }
+
+    public void testQuery() {
+        stocksSearchService.searchNearByStocks(new BrowserLocation(33.7051648D, -117.74853119999999D));
+        StoreStock entity = new StoreStock();
+        entity.setStartTime(new Date());
+        entity.setNumber(100);
+        entity.setLocationId("jlkjsadasd");
+        entity.setItemId("test");
+        entity.setEndTime(new Date());
+        entity.setDescription("kjhkjhjaskjdhajkshdakjs hkj dsahdk ajah");
+        entity.setActive(true);
+        entity.setStoreId(876823L);
+        entity.setStockId("asadh_id");
+
+//        try {
+//            stocksSearchService.createStock(entity, new GeoLocation(33.7051648D, -117.74853119999999D));
+//        } catch (JsonProcessingException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Transactional

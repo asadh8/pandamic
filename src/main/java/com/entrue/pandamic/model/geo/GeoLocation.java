@@ -1,12 +1,6 @@
 package com.entrue.pandamic.model.geo;
 
-import com.entrue.pandamic.view.request.stock.BrowserLocation;
-import com.entrue.pandamic.view.request.stock.CreateStocksRequest;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(schema = "pandamic", name = "locations")

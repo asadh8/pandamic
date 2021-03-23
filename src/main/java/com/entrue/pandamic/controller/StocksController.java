@@ -61,4 +61,10 @@ public class StocksController {
             return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
         }
     }
+
+    @RequestMapping(path = "/stocks/test", method = RequestMethod.GET)
+    public ResponseEntity<?> test() {
+        storeStockManagerService.testQuery();
+        return new ResponseEntity<>("Tested", HttpStatus.ACCEPTED);
+    }
 }
